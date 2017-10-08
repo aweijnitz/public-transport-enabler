@@ -1,6 +1,8 @@
 build/
 .gradle/
 
+.nb-gradle-properties
+
 # Ignore IDE:s and Editor support files
 
 

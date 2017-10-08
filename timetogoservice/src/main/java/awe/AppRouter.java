@@ -12,7 +12,6 @@ import de.schildbach.pte.dto.NearbyLocationsResult;
 import de.schildbach.pte.dto.SuggestLocationsResult;
 import de.schildbach.pte.dto.QueryDeparturesResult;
 
-import awe.TimeLeft;
 import java.io.IOException;
 import java.util.Date;
 import java.util.EnumSet;
@@ -20,31 +19,36 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @RestController
-public class TimeToGoController {
+public class AppRouter {
 
     private final MvvProvider provider = new MvvProvider();
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
-
+    
     /**
      * Query upcoming departures for a station.
      * 
-     * Example for Plattlinger Straße
-     * http://127.0.0.1:8080/timeleft?stopId=1001403
+     * <b>Note for Javascript devs:</b>
+     * The epochTime can be easily generated on the client with
+     * <code>Math.floor((new Date).getTime()/1000);</code>
      * 
-     * @param stopId
+     * Example for Plattlinger Straße
+     * http://127.0.0.1:8080/departures?stopId=1001403
+     * 
+     * @param stopId - Id of the stop to query for
+     * @param epochTime - Time since Unix Epoch (optional)
+     * @param maxDepartures - Max number of departure entries to return (optional)
      * @return
      * @throws IOException 
      */
-    @RequestMapping(value = "/timeleft", method = RequestMethod.GET)
-    public QueryDeparturesResult timeleft(@RequestParam(value = "stopId", defaultValue = "-1") final String stopId)
+    @RequestMapping(value = "/departures", method = RequestMethod.GET)
+    public QueryDeparturesResult departures(
+            @RequestParam(value = "stopId", defaultValue = "-1") final String stopId,
+            @RequestParam(value = "time", defaultValue = "-1") final long epochTime,
+            @RequestParam(value = "maxDepartures", defaultValue = "16") final int maxDepartures)
             throws IOException {
-        // TODO: Implement functions that returns the time left until next departure
 
-        Date time = new Date();
-        int maxDepartures = 5;
+        Date dateTime = (epochTime == -1) ? new Date() : new Date(epochTime); 
         boolean equivs = false;
-        return provider.queryDepartures(stopId, time, maxDepartures, equivs);
+        return provider.queryDepartures(stopId, dateTime, maxDepartures, equivs);
     }
 
     /**
