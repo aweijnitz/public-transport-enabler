@@ -36,10 +36,13 @@ This repository relies on two sub projects:
 ## Example calls
 
 **Query upcoming departures for Plattlinger Straße**
+
 [http://127.0.0.1:8080/departures?stopId=1001403](http://127.0.0.1:8080/departures?stopId=1001403)
 
 **Query available stops within a given radius in meters**
+
 The coordinates are latitude and longitude multiplied by 1000000
+
 [http://127.0.0.1:8080/near-point?lat=48078804&long=11512663&range=500&maxResults=10](http://127.0.0.1:8080/near-point?lat=48078804&long=11512663&range=100&maxResults=10)
 
 See [AppRouter.java](timetogoservice/src/main/java/awe/AppRouter.java) for more details.
