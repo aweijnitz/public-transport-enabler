@@ -10,14 +10,16 @@ public class TimeLeft {
 
     private int minutesLeft = -1;
     private String nameOfStop = "NOT DEFINED";
+    private int stopId = -1;
+
 
     public TimeLeft() {
 
     }
 
-    public TimeLeft(int minutesLeft, String nameOfStop) {
+    public TimeLeft(int minutesLeft, int stopId) {
         this.minutesLeft = minutesLeft;
-        this.nameOfStop = nameOfStop;
+        this.stopId = stopId;
     }
 
     /**
@@ -46,6 +48,14 @@ public class TimeLeft {
      */
     public void setNameOfStop(String nameOfStop) {
         this.nameOfStop = nameOfStop;
+    }
+    
+    public int getStopId() {
+        return stopId;
+    }
+
+    public void setStopId(int stopId) {
+        this.stopId = stopId;
     }
 
 }
